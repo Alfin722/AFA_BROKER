@@ -12,4 +12,3 @@ tensorflow
 yfinance
 networkx
 textwrap
-pip install --upgrade pip
