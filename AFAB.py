@@ -22,7 +22,7 @@ from google.generativeai.types import HarmCategory, HarmBlockThreshold
 from functools import wraps
 from yfinance.exceptions import YFRateLimitError
 import time
-
+import textwrap
 
 genai.configure(api_key="AIzaSyBdT5eA5-U5jveNQTkDZkpeTpdEee_ArRA") 
 
@@ -565,7 +565,7 @@ with tab2:
         "Dividend Yield": info2.get("dividendYield")
     }
     
-    deep_prompt = f"""
+    deep_prompt = textwrap.dedent(f"""
     Anda adalah seorang Analis Keuangan Senior dengan pengalaman lebih dari 15 tahun, bersertifikat CFA dan ahli di pasar modal. Tugas Anda adalah menyusun Analisis AFA (Analisis Fundamental & Analisis Teknikal) yang sangat mendalam untuk saham {ticker}.
 
     1. Konteks Makro dan Sektor
@@ -595,7 +595,7 @@ with tab2:
     - Sertakan horizon investasi (jangka pendek: 1–3 bulan, menengah: 6–12 bulan, panjang: >12 bulan)
     - Jelaskan asumsi utama dan sensitivitas output terhadap perubahan variabel kunci
 
-    Gunakan data numerik konkret, tabel ringkasan, dan referensi teori analisis keuangan di sepanjang pembahasan. Buatlah penjelasan yang terstruktur, jelas, dan dapat langsung diimplementasikan oleh seorang portfolio manager."""
+    Gunakan data numerik konkret, tabel ringkasan, dan referensi teori analisis keuangan di sepanjang pembahasan. Buatlah penjelasan yang terstruktur, jelas, dan dapat langsung diimplementasikan oleh seorang portfolio manager.""")
     
     
     ai_analysis = get_ai_analysis(deep_prompt)
