@@ -53,6 +53,18 @@ div[data-testid="stAppViewContainer"] { padding: 2rem; }
 """
 st.markdown(custom_css, unsafe_allow_html=True)
 
+responsive_css = """
+<style>
+@media only screen and (max-width: 600px) {
+  div[data-testid="stAppViewContainer"] { padding: 1rem !important; }
+  .css-1d391kg { display: none !important; }
+  .css-1e5imcs, .css-1kyxreq { flex-direction: column !important; width: 100% !important; }
+  .buy-button, .sell-button { width: 100% !important; }
+}
+</style>
+"""
+st.markdown(responsive_css, unsafe_allow_html=True)
+
 st.title("📊 AFA Stock Trading")
 
 if 'portfolio' not in st.session_state:
@@ -507,10 +519,12 @@ with tab2:
             st.plotly_chart(st.session_state['lstm_fig'], use_container_width=True)
 
         col1, col2, col3, col4 = st.columns(4)
-        col1.metric("Train RMSE", f"{result['train_rmse']:.2f}")
-        col2.metric("Test RMSE", f"{result['test_rmse']:.2f}")
-        col3.metric("Prediksi Harga Besok", f"{symbol}{result['next_day_price']:.2f}")
-        col4.metric("Harga Saham saat ini", f"{symbol}{S2:,.2f}" if S2 is not None else "N/A")
+        cols = st.columns(2)
+        cols[0].metric("Train RMSE", f"{result['train_rmse']:.2f}")
+        cols[1].metric("Test RMSE", f"{result['test_rmse']:.2f}")
+        cols = st.columns(2)
+        cols[0].metric("Prediksi Harga Besok", f"{symbol}{result['next_day_price']:.2f}")
+        cols[1].metric("Harga Saham saat ini", f"{symbol}{S2:,.2f}" if S2 is not None else "N/A")
         
     else: 
         with st.spinner("⏳ Melatih model dan memprediksi harga..."):
@@ -524,10 +538,12 @@ with tab2:
                 }
                 trend = detect_trend(hist2) if hist2 is not None else "N/A"
                 col1, col2, col3, col4 = st.columns(4)
-                col1.metric("Train RMSE", f"{train_rmse:.2f}")
-                col2.metric("Test RMSE", f"{test_rmse:.2f}")
-                col3.metric("Prediksi Harga Besok", f"{symbol}{next_day_price:.2f}")
-                col4.metric("Harga Saham saat ini", f"{symbol}{S2:,.2f}" if S2 is not None else "N/A")
+                cols = st.columns(2)
+                cols[0].metric("Train RMSE", f"{train_rmse:.2f}")
+                cols[1].metric("Test RMSE", f"{test_rmse:.2f}")
+                cols = st.columns(2)
+                cols[0].metric("Prediksi Harga Besok", f"{symbol}{next_day_price:.2f}")
+                cols[1].metric("Harga Saham saat ini", f"{symbol}{S2:,.2f}" if S2 is not None else "N/A")
     st.markdown("---")
     
     st.subheader("💡 Analisis AFA")
