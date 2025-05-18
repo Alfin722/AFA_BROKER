@@ -1,0 +1,12 @@
+google-generativeai
+matplotlib
+numpy
+pandas
+plotly
+scikit-fuzzy
+scikit-learn
+scipy
+streamlit
+streamlit-autorefresh
+tensorflow
+yfinance
