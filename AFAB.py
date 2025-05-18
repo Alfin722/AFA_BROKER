@@ -22,7 +22,6 @@ from google.generativeai.types import HarmCategory, HarmBlockThreshold
 from functools import wraps
 from yfinance.exceptions import YFRateLimitError
 import time
-import textwrap
 
 genai.configure(api_key="AIzaSyBdT5eA5-U5jveNQTkDZkpeTpdEee_ArRA") 
 
@@ -48,10 +47,11 @@ div[data-testid="stAppViewContainer"] { padding: 2rem; }
 .buy-button { background-color: #28a745; }
 .buy-button:hover { background-color: #218838; }
 .sell-button { background-color: #dc3545; }
-.sell-button:hover { background-color: #c82333; }
 </style>
 """
 st.markdown(custom_css, unsafe_allow_html=True)
+
+import textwrap
 
 responsive_css = """
 <style>
