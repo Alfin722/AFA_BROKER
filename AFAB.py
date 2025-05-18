@@ -585,7 +585,7 @@ with tab2:
     - Level Kunci: Support/resistance jangka pendek, menengah, jangka panjang
     - Sinyal:
     {signals_str}
-    "4. Sintesis dan Stress Test
+    4. Sintesis dan Stress Test
     - Tarik benang merah antara hasil fundamental & teknikal
     - Uji skenario negatif (e.g. suku bunga naik, laba melambat) dan positif (pertumbuhan sektor)
     - Diskusikan faktor risiko eksternal (geopolitik, regulasi, persaingan) dan mitigasinya
