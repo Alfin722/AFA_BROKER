@@ -417,13 +417,14 @@ with tab1:
         col1, col2 = st.columns([2, 1])
         with col1:
             qty = st.number_input("Jumlah Saham", min_value=1, value=1, step=1, help="Masukkan jumlah saham yang ingin dibeli/dijual")
+            total = qty * price_idr
             st.markdown(f"**Total (IDR):** <span style='font-size:1.2em;color:#28a745;font-weight:bold'>Rp{total:,.2f}</span>", unsafe_allow_html=True)
             st.markdown(" ")
             beli = st.form_submit_button("🟢 Beli", type="primary")
             jual = st.form_submit_button("🔴 Jual", type="secondary")
         with col2:
             st.metric("Harga per Saham (IDR)", f"Rp{price_idr:,.2f}")
-        
+        total_cost = qty * price_idr
         if beli or jual:
             action = "Beli" if beli else "Jual"
             port = st.session_state.get("portfolio", {"cash":0, "positions":{}})
