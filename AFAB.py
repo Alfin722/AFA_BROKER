@@ -30,9 +30,8 @@ st.set_page_config(page_title="Aplikasi Trading & Investasi Saham", layout="wide
 custom_css = """
 <style>
 body { background-color: #f4f6f9; }
-h1, h2, h3, h4, h5, h6 { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #333; }
+h1, h2, h3, h4, h5, h6 { font-family: 'Poppins', Helvetica, Arial, sans-serif; color: #222; }
 div[data-testid="stAppViewContainer"] { padding: 2rem; }
-.st-radio label { font-size: 16px; font-weight: 600; }
 .stNumberInput > div { width: 100%; }
 .buy-button, .sell-button {
     width: 100%;
@@ -43,10 +42,55 @@ div[data-testid="stAppViewContainer"] { padding: 2rem; }
     font-weight: bold;
     color: white;
     margin-top: 10px;
+    transition: background 0.2s;
+    box-shadow: 0 2px 8px rgba(40,167,69,0.08);
 }
-.buy-button { background-color: #28a745; }
-.buy-button:hover { background-color: #218838; }
-.sell-button { background-color: #dc3545; }
+.buy-button { background: linear-gradient(90deg, #28a745 60%, #218838 100%); }
+.buy-button:hover { background: #218838; }
+.sell-button { background: linear-gradient(90deg, #dc3545 60%, #b52a37 100%); }
+.sell-button:hover { background: #b52a37; }
+.stMetric {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    padding: 10px 0;
+    margin-bottom: 10px;
+}
+.stDataFrame, .stTable {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    padding: 10px;
+}
+.stTabs [data-baseweb="tab-list"] {
+    background: #f8fafc;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+.stTabs [data-baseweb="tab"] {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #222;
+}
+.stTabs [aria-selected="true"] {
+    color: #fff !important;
+    background: linear-gradient(90deg, #1e90ff 60%, #081f5c 100%) !important;
+    border-radius: 8px 8px 0 0;
+}
+@media only screen and (max-width: 900px) {
+  div[data-testid="stAppViewContainer"] { padding: 1rem !important; }
+  .stNumberInput > div { width: 100%; }
+  .stTabs [data-baseweb="tab-list"] { flex-direction: column; }
+}
+@media only screen and (max-width: 600px) {
+  div[data-testid="stAppViewContainer"] { padding: 0.5rem !important; }
+  .stNumberInput > div { width: 100%; }
+  .buy-button, .sell-button { font-size: 14px; padding: 10px; }
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.2rem; }
+  .stTabs [data-baseweb="tab-list"] { flex-direction: column; }
+  .stMetric { font-size: 0.95em; }
+}
 </style>
 """
 st.markdown(custom_css, unsafe_allow_html=True)
@@ -325,7 +369,6 @@ with tab1:
         st.error("Gagal mengambil data saham: " + str(e))
         S2, sigma2, hist2, info2 = None, None, None, None
        
-     
     currency = info2.get('currency', 'USD') if info2 else 'USD'
     currency_symbols = {
         'USD': '$','IDR': 'Rp','EUR': '€','JPY': '¥','GBP': '£',
@@ -371,29 +414,15 @@ with tab1:
     price_idr = price * fx
     
     with st.form("form_trading"):
-        col1,col2 = st.columns(2)
+        col1, col2 = st.columns([2, 1])
         with col1:
-            qty = st.number_input("Jumlah Saham", min_value=1, value=1, step=1)
-            total = qty * price_idr
-            kolom1, kolom2, kolom3, kolom4, kolom5 = st.columns(5)
-            with kolom1:
-                beli = st.form_submit_button("🟢 Beli")
-            with kolom2:
-                jual = st.form_submit_button("🔴 Jual")
-            with kolom3:
-                st.markdown("         ")
-            with kolom4:
-                st.markdown("         ")
-            
-            try:
-                last_price = float(hist2['Close'].iloc[-1])
-            except:
-                last_price = 0.0
-            total_cost= qty * price_idr
-        
+            qty = st.number_input("Jumlah Saham", min_value=1, value=1, step=1, help="Masukkan jumlah saham yang ingin dibeli/dijual")
+            st.markdown(f"**Total (IDR):** <span style='font-size:1.2em;color:#28a745;font-weight:bold'>Rp{total:,.2f}</span>", unsafe_allow_html=True)
+            st.markdown(" ")
+            beli = st.form_submit_button("🟢 Beli", type="primary")
+            jual = st.form_submit_button("🔴 Jual", type="secondary")
         with col2:
             st.metric("Harga per Saham (IDR)", f"Rp{price_idr:,.2f}")
-            st.metric("Total (IDR)", f"Rp{total:,.2f}")
         
         if beli or jual:
             action = "Beli" if beli else "Jual"
