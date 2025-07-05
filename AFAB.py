@@ -595,7 +595,7 @@ with tab2:
     - Sertakan horizon investasi (jangka pendek: 1–3 bulan, menengah: 6–12 bulan, panjang: >12 bulan)
     - Jelaskan asumsi utama dan sensitivitas output terhadap perubahan variabel kunci
 
-    Gunakan data numerik konkret, tabel ringkasan, dan referensi teori analisis keuangan di sepanjang pembahasan. Buatlah penjelasan yang terstruktur, jelas, dan dapat langsung diimplementasikan oleh seorang portfolio manager. Jelaskan dalam bahasa sunda""")
+    Gunakan data numerik konkret, tabel ringkasan, dan referensi teori analisis keuangan di sepanjang pembahasan. Buatlah penjelasan yang terstruktur, jelas, dan dapat langsung diimplementasikan oleh seorang portfolio manager.""")
     
     
     ai_analysis = get_ai_analysis(deep_prompt)
